@@ -66,7 +66,6 @@
         crossorigin="anonymous"></script>
 
 
-
 <div class="container">
     <div class="row main-row p-2">
         <div class="col-lg-4 col-md-12 col-sm-12">
@@ -102,7 +101,7 @@
             </div>
             <div class="blog-desc mb-2">
 
-                <p>
+                <p style="font-size: small;text-align: justify-all;">
                     {{$posts->body}}
                 </p>
 
@@ -117,8 +116,63 @@
 
             </div>
 
+
         </div>
+
     </div>
+    <div class="row">
+        @auth
+            <h6>Comments:</h6>
+            <form method="post" action="{{url('/addcomment')}}">
+                @csrf
+
+                <textarea name="comment" rows="3" cols="70"></textarea>
+                <input type="hidden" name="post_id" value="{{$posts->id}}">
+                <br>
+                <button type="submit" value="Add" class="btn btn-outline-dark">Add</button>
+
+
+            </form>
+
+
+    </div>
+    <div>
+
+        @foreach($posts->comments as $comment)
+            {{--            <b>{{$comment->comment}}</b>--}}
+            <br>
+            <b>{{$comment->user->name}}</b>
+            <small style="font-size: 11px">{{$comment->created_at}}</small>@if(auth()->user()->id===$comment->user->id) <a href="{{url('/comment')}}/{{$comment->id}}">delete</a>@endif
+{{--            <a href="{{url('/update/')}}/{{$post->id}}">--}}
+            <br>
+            <text>{{$comment->comment}}</text>
+
+            <br>
+            @foreach($comment->replies as $reply)
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<b></b>
+
+                <b>{{$reply->user->name}}:</b>
+                <text>{{$reply->description}}</text>
+                <br>
+            @endforeach
+            <form action="{{url('/addreply')}}" method="post">
+                @csrf
+                <textarea name="reply" rows="1" cols="50"></textarea>
+                <button class="btn btn danger" type="submit">Reply</button>
+                <input type="hidden" name="comment_id" value="{{$comment->id}}">
+            </form>
+        @endforeach
+
+        <br>
+        {{--        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<b>User:</b><text>This is a demo reply</text>--}}
+        {{--        <br>--}}
+        {{--        <textarea name="comment" rows="2" cols="50"></textarea>--}}
+        {{--        <button class="btn btn danger">Reply</button>--}}
+        {{--        @endforeach--}}
+    </div>
+    @endauth
+
+
 </div>
 
 </body>

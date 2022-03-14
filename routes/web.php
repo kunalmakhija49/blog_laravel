@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +34,11 @@ Route::get('/update/{id}',[BlogController::class,'update']);
 //Route::post('/update/{id}',[BlogController::class],'edit');//
 Route::post('/update/{id}',[BlogController::class,'edit']);
 Route::get('/delete/{id}',[BlogController::class,'delete']);
+Route::post('/addcomment',[CommentController::class,'storecomment']);
 
+Route::post('/addreply',[CommentController::class,'storereply']);
+Route::post('/',[Controller::class,'index']);
+Route::get('/comment/{comment}',[CommentController::class,'destroy']);
 
 
 require __DIR__.'/auth.php';

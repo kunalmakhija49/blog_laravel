@@ -34,6 +34,14 @@
             </tr>
             <tr>
                 <td>
+                    <label for="blog heading">Category: </label>
+                </td>
+                <td>
+                    <input type="text" name="category" required class="form-control" value="{{$post->category}}">
+                </td>
+            </tr>
+            <tr>
+                <td>
                     <label for="description">Blog Description: </label>
                 </td>
                 <td>

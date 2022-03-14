@@ -6,6 +6,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.17/tailwind.min.css">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -48,17 +49,39 @@
             @endauth
 
         </ul>
-        <form class="form-inline my-2 my-lg-0" method="post" action="{{url('/')}}">
-            @csrf
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+{{--        <form class="form-inline my-2 my-lg-0" method="post" action="">--}}
+{{--            @csrf--}}
+{{--            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="search">--}}
+{{--            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>--}}
+{{--        </form>--}}
     </div>
 </nav>
+<div class="dropdown float-right">
+    <label for="categories"></label>
+    <form method="post" action="{{url('/')}}">
+        @csrf
+
+        <select name="blogs" id="blogs" style="border: 1px solid black">
+
+            @foreach($different_categories as $category)
+                <option value="category"></option>
+                <option value="{{$category->category}}" style="padding: 0px">{{$category->category}}</option>
+                {{--        <option value="Travel">Travel</option>--}}
+                {{--        <option value="Food">Food</option>--}}
+            @endforeach
+        </select>
+
+        <button class="btn btn-primary" type="submit">Filter</button>
+
+    </form>
+
+</div>
 
 <h2 style="text-align: center" lable for="heading">My Blog App</h2>
 <br>
 <br>
+
+
 <div class="container ">
     <div class="row align-items-start">
         {{--                    add loop here--}}
@@ -66,7 +89,7 @@
             <div class="col">
                 <div class="card margin-card" style="width: 13rem;">
                     <img src="/images/img.png.jpg" class="card-img-top" alt="...">
-                    <small>- By {{$post->user->name}}</small>
+                    <small>- By {{ $post->user->name}}</small>
                     <span><small>- Added On {{$post->date}} {{$post->weekday}}</small></span>
 
                     <div class="card-body">
@@ -81,7 +104,10 @@
         @endforeach
 
     </div>
+
 </div>
+
+    {{$posts->links()}}
 
 
 <!-- Optional JavaScript -->

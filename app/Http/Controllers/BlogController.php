@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,12 +28,14 @@ class BlogController extends Controller
     {
         $request->validate([
             'heading'=>'required',
-            'description'=>'required'
+            'description'=>'required',
+            'category'=>'required'
         ]);
         $day = date('l');
         $date = date('d M Y');
         $title = $request->input('heading');
         $body = $request->input('description');
+        $category=$request->input('category');
         $user_id = Auth::User()->id;
         $post = new Post();
         $post->title=$title;
@@ -40,16 +43,21 @@ class BlogController extends Controller
         $post->user_id=$user_id;
         $post->weekday=$day;
         $post->date=$date;
+        $post->category=$category;
         $post->save();
 
         return redirect('/');
 
     }
-    public function singlepost($id)
+    public function singlepost($id,Request $request)
     {
-        $posts = Post::find($id);
-        $data = compact('posts');
-        return view('description')->with($data);
+        $posts = Post::with('comments','user:id,name')->find($id);
+
+//        $post_id = $request->input(2);
+        //$post_comments = comment::find($id);
+       // $commentsdata = compact('post_comments');
+       // $data = compact('posts');
+       return view('description',compact('posts'));
     }
     public function listview()
     {
@@ -75,6 +83,7 @@ class BlogController extends Controller
         $post = Post::find($id);
         $post->title = $request['title'];
         $post->body = $request['body'];
+        $post->category = $request['category'];
         $post->save();
         return redirect('/dashboard');
     }

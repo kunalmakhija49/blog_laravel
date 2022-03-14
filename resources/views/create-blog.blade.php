@@ -12,6 +12,7 @@
             border-radius: 5px;
             border: 1px solid #ccc;
             box-shadow: 1px 1px 1px #999;
+
         }
     </style>
 
@@ -39,10 +40,19 @@
             </tr>
             <tr>
                 <td>
+                    <label for="blog heading">Category: </label>
+                </td>
+                <td>
+                    <input type="text" name="category" required class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <td>
                     <label for="description">Blog Description: </label>
                 </td>
                 <td>
-                    <textarea class="form-control" rows="10" name="description" required></textarea>
+                    <textarea  rows="10" cols="40" name="description" required></textarea>
+{{--                    <textarea name="reply" rows="1" cols="50"></textarea>--}}
                 </td>
 
             </tr>
@@ -57,7 +67,7 @@
             </tr>
             <tr>
                 <td></td>
-                <td><a href=""/>View all blogs</td>
+                <td><a href="{{url('/dashboard')}}"/>View all blogs</td>
             </tr>
         </table>
     </form>
